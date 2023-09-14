@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ws_event_calendar" basedir="." default="build">
+	<property name="builddir" value="${basedir}/ws_price_history" />
+	<property name="password" value="${pass}" />
+	<target name="build" depends="start, prepare, composer, prepare-release, upload-release">
+	</target>
+	<target name="start">
+		<echo message=" " />
+		<echo message="----------------------------------------------------------------" />
+		<echo message="   _____             _                                          " />
+		<echo message="  |  __ \           | |                                         " />
+		<echo message="  | |  | | ___ _ __ | | ___  _   _                              " />
+		<echo message="  | |  | |/ _ | '_ \| |/ _ \| | | |                             " />
+		<echo message="  | |__| |  __| |_) | | (_) | |_| |                             " />
+		<echo message="  |_____/ \___| .__/|_|\___/ \__, |                             " />
+		<echo message="              | |             __/ |                             " />
+		<echo message="              |_|            |___/                              " />
+		<echo message="" />
+		<echo message="----------------------------------------------------------------" />
+		<echo message="" />
+	</target>
+    <target name="prepare">
+		<delete includeEmptyDirs="true" failonerror="false">
+			<fileset dir="${builddir}" />
+		</delete>
+		<mkdir dir="${builddir}" />
+		<delete file="${basedir}/composer.lock" failonerror="false" />
+	</target>
+	<target name="composer" description="Run composer install">
+		<exec executable="composer">
+			<arg value="install" />
+		</exec>
+	</target>
+	<target name="prepare-release">
+		<copy todir="${builddir}/App">
+			<fileset dir="${basedir}/App" />
+		</copy>
+		<copy todir="${builddir}/assets">
+			<fileset dir="${basedir}/assets" />
+		</copy>
+		<copy todir="${builddir}/languages">
+			<fileset dir="${basedir}/languages" />
+		</copy>
+		<copy todir="${builddir}/templates">
+			<fileset dir="${basedir}/templates" />
+		</copy>
+		<copy todir="${builddir}/vendor">
+			<fileset dir="${basedir}/vendor" />
+		</copy>
+		<copy todir="${builddir}/">
+			<fileset dir="${basedir}/">
+				<include name="*.php" />
+				<include name="*.md" />
+				<include name="*.txt" />
+			</fileset>
+		</copy>
+		<zip destfile="${basedir}/ws_price_history.zip">
+			<zipfileset dir="${builddir}" prefix="ws_price_history" />
+		</zip>
+	</target>
+	<target name="upload-release">
+		<scp file="ws_price_history.zip" todir="websystems@update.web-systems.pl:/home/websystems/domains/update.web-systems.pl/public_html/packages" password="${password}" trust="true" />
+	</target>
+</project>
