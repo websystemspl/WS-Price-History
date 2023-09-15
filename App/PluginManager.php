@@ -3,6 +3,7 @@
 namespace WsPriceHistory\App;
 
 use WsPriceHistory\App\Assets;
+use WsPriceHistory\App\Actions;
 use WsPriceHistory\App\Database\DatabaseOperation;
 use WsPriceHistory\App\Database\DatabaseTable;
 
@@ -12,9 +13,9 @@ class PluginManager
   public function run()
   {
     new Assets;
+    new Actions;
     $databaseTable = new DatabaseTable;
     $databaseTable->createTable();
-    DatabaseOperation::readOnePrice('10581');
     add_action('save_post', [$this, 'writePriceHistoryOnSaveProduct']);
   }
 
@@ -28,18 +29,29 @@ class PluginManager
       $salePrice = $_POST['_sale_price'];
       $salePriceDatesTo = $_POST['_sale_price_dates_to'];
       $currentDate = date('Y-m-d');
-      if ($regularPrice < $salePrice) {
-        $price = $regularPrice;
-      } else {
-        if ($salePriceDatesTo < $currentDate) {
-          $price = $regularPrice;
-        } else {
-          $price = $salePrice;
-        }
-      }
 
-      $record = new Record('', $postID, $price, date_create_from_format('Y-m-d', $currentDate));
-      $record->setId(DatabaseOperation::write($record));
+      if($salePrice === ""){
+        $price = $regularPrice;
+      }else{
+        if($regularPrice < $salePrice){
+          $price = $regularPrice;
+        }else {
+          if($salePriceDatesTo != ""){
+            if ($salePriceDatesTo < $currentDate) {
+              $price = $regularPrice;
+            } else {
+              $price = $salePrice;
+            }
+          }else{
+            $price = $salePrice;
+          }
+      }     
+    }
+      $previousPrice = DatabaseOperation::getPreviousPrice($_POST['post_ID']);
+      if($previousPrice != $price){
+        $record = new Record('', $postID, $price, date_create_from_format('Y-m-d', $currentDate));
+        $record->setId(DatabaseOperation::write($record));
+      }
     }
   }
 }

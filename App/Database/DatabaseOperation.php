@@ -44,7 +44,7 @@ class DatabaseOperation
     if ($record != null) {
       $wpdb->insert($tableNameWithPrefix, array(
         DatabaseTable::getPostIdColumnName() => $record->getPostId(),
-        DatabaseTable::getPriceColumnName() => $record->getPrice(),
+        DatabaseTable::getPriceColumnName() => floatval($record->getPrice()),
         DatabaseTable::getDateColumnName() => $record->getDate()->format('Y-m-d'),
       ));
       $lastId = $wpdb->insert_id;
@@ -64,14 +64,26 @@ class DatabaseOperation
   {
   }
 
+  public static function getPreviousPrice($postId){
+    global $wpdb;
+    $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
+    $query = $wpdb->prepare("SELECT price as lowest_price FROM $tableNameWithPrefix WHERE post_id = %s ORDER BY date DESC LIMIT 1;", [$postId]);
+    $result = $wpdb->get_row($query);
+    if ($result->lowest_price != null) {
+      return $result->lowest_price;
+    } else {
+      return null;
+    }
+  }
+
   public static function readOnePrice($postId)
   {
     global $wpdb;
     $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
     $query = $wpdb->prepare("SELECT MIN(price) AS lowest_price FROM $tableNameWithPrefix WHERE post_id = %s AND date >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$postId]);
-    $result = $wpdb->get_results($query, 'ARRAY_N');
-    if ($result != null) {
-      return $result;
+    $result = $wpdb->get_row($query);
+    if ($result->lowest_price != null) {
+      return $result->lowest_price;
     } else {
       return null;
     }
