@@ -17,13 +17,7 @@ if (!defined('WPINC')) {
   die;
 }
 
-if (!defined('WS_PRICE_HISTORY_PLUGIN_DIR_PATH')) {
-  define('WS_PRICE_HISTORY_PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
-}
 
-if (!defined('WS_PRICE_HISTORY_PLUGIN_DIR_URL')) {
-  define('WS_PRICE_HISTORY_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
-}
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -38,12 +32,22 @@ class WsPriceHistory
   public function __construct()
   {
     load_plugin_textdomain('ws_price_history', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    if (!defined('WS_PRICE_HISTORY_PLUGIN_DIR_PATH')) {
+      define('WS_PRICE_HISTORY_PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
+    }
+    
+    if (!defined('WS_PRICE_HISTORY_PLUGIN_DIR_URL')) {
+      define('WS_PRICE_HISTORY_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
+    }
+    register_activation_hook(__FILE__, [$this, 'activate']);
+    register_deactivation_hook(__FILE__, [$this, 'deactivate']);
     $pluginManager = new WsPriceHistory\App\PluginManager;
     $pluginManager->run();
   }
 
   public static function activate()
   {
+
   }
 
   public static function deactivate()
@@ -51,7 +55,8 @@ class WsPriceHistory
   }
 }
 
-register_activation_hook(__FILE__, [WsPriceHistory::class, 'activate']);
-register_deactivation_hook(__FILE__, [WsPriceHistory::class, 'deactivate']);
+
 
 new WsPriceHistory();
+
+add_filter( 'use_block_editor_for_post', '__return_false' );

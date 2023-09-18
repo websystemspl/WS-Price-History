@@ -1,0 +1,128 @@
+.settings-tabs {
+    padding-top: 13px;
+    padding-bottom: 11px;
+    background-color: white;
+}
+
+.settings-tabs>a {
+    padding: 10px;
+    font-size: 18px;
+    color: #000;
+    text-decoration: unset;
+    text-transform: uppercase;
+}
+
+.settings-tabs>a.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.settings-tabs>a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#settings-container form {
+    padding-left: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+#settings-container form label {
+    display: inline-block;
+    width: 20%;
+}
+
+#settings-container form label,
+#settings-container form input,
+#settings-container form select {
+    margin-bottom: 10px;
+}
+
+#settings-container form input[type=number],
+#settings-container form input[type=text],
+#settings-container form input[type=color],
+#settings-container form select {
+    min-width: 100px;
+}
+
+#settings-container form .submit {
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+#settings-container form div {
+    display: none;
+}
+
+#settings-container form div.active {
+    display: block;
+}
+
+.information-container .first-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.information-container>.description {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.information-container>.description>p {
+    font-size: 16px;
+}
+
+.information-container .first-row p {
+    font-size: 22px;
+    padding: 0;
+    margin-left: 25px;
+}
+
+.pro-version-fatures-list {
+    list-style: disc;
+    padding-left: 20px;
+    font-size: 18px;
+}
+
+.pro-version-fatures-list > li {
+    margin-bottom: 10px;
+}
+
+#ws-licence-section .premium-version {
+    font-size: 15px;
+}
+
+.index-all-prices {
+    display: flex !important;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.index-all-prices > p {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0px;
+    margin-right: 10px;
+}
+
+#index-placeholder {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+}
+
+#bulk-index-all-prices {
+    margin-right: 10px;
+}
+
+.index-all-prices > .success{
+    display: none;
+    color: green;
+}
