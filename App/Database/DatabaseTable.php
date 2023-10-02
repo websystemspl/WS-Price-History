@@ -55,12 +55,4 @@ class DatabaseTable
       return $is_error;
     }
   }
-
-  public static function dropTable()
-  {
-    global $wpdb;
-    $tableNameWithPrefix = $wpdb->prefix . self::getTableName();
-    $query = $wpdb->prepare('DROP TABLE IF EXISTS %s', $tableNameWithPrefix);
-    $wpdb->query($query);
-  }
 }
