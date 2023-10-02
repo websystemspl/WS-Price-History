@@ -17,12 +17,13 @@ if (!defined('WPINC')) {
   die;
 }
 
-
-
 require __DIR__ . '/vendor/autoload.php';
 
+$dotenv = new Symfony\Component\Dotenv\Dotenv();
+$dotenv->load(__DIR__ . '/.env');
+
 YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
-  'https://update.web-systems.pl/?action=get_metadata&slug=ws_price_history',
+  $_ENV['UPDATE_SERVER'] . 'ws_price_history',
   __FILE__,
   'ws_price_history'
 );
