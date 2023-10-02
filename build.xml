@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ws_event_calendar" basedir="." default="build">
 	<property name="builddir" value="${basedir}/ws_price_history" />
-	<property name="password" value="${pass}" />
-	<target name="build" depends="start, prepare, composer, prepare-release, upload-release">
+	<property name="password" value="${password}" />
+	<property name="update_server" value="${update_server}" />
+	<property name="todir" value="${todir}" />
+	<target name="build" depends="start, prepare, check-env, composer, prepare-release, upload-release">
 	</target>
 	<target name="start">
 		<echo message=" " />
@@ -26,6 +28,21 @@
 		<mkdir dir="${builddir}" />
 		<delete file="${basedir}/composer.lock" failonerror="false" />
 	</target>
+	<target name="create-env">
+       <condition property="env.file.exists">
+           <available file=".env" />
+       </condition>
+       <echo file=".env">UPDATE_SERVER=${update_server}</echo>
+   </target>
+   <target name="check-env" depends="create-env">
+       <fail message="Failed to create .env file.">
+           <condition>
+               <not>
+                   <isset property="env.file.exists" />
+               </not>
+           </condition>
+       </fail>
+   </target>	
 	<target name="composer" description="Run composer install">
 		<exec executable="composer">
 			<arg value="install" />
@@ -52,6 +69,7 @@
 				<include name="*.php" />
 				<include name="*.md" />
 				<include name="*.txt" />
+				<include name=".env" />
 			</fileset>
 		</copy>
 		<zip destfile="${basedir}/ws_price_history.zip">
@@ -59,6 +77,6 @@
 		</zip>
 	</target>
 	<target name="upload-release">
-		<scp file="ws_price_history.zip" todir="websystems@update.web-systems.pl:/home/websystems/domains/update.web-systems.pl/public_html/packages" password="${password}" trust="true" />
+		<scp file="ws_price_history.zip" todir="${todir}" password="${password}" trust="true" />
 	</target>
 </project>
