@@ -3,7 +3,7 @@ Contributors:      Web Systems
 Tags:              Woocommerce, Prices, History
 Requires at least: 6.0  
 Tested up to:      6.2.2  
-Stable tag:        1.0.0 
+Stable tag:        1.0.0  
 License:           GPL v2 or later  
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html  
 Update URI:        https://example.com/my-plugin/  
@@ -31,10 +31,9 @@ Deactivate the plugin.
 Delete the plugin.
   
 == Screenshots ==  
-1-Pattern. screenshot-1.png  
-2-Pattern. screenshot-2.png  
-3-Pattern. screenshot-3.png  
-4-Pattern. screenshot-4.png  
+screenshot-1.png  
+screenshot-2.png  
+screenshot-3.png  
   
 == Changelog ==
 

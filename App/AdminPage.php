@@ -1,43 +1,41 @@
-<?php 
+<?php
 
 namespace WsPriceHistory\App;
 
-class AdminPage {
-    private $capability = 'manage_options';
+class AdminPage
+{
+	private $capability = 'manage_options';
 	private const WS_PRICE_HISTORY_SETTINGS_KEY = "ws_price_history_plugin_options";
 
-    private $generalFields = [
+	private $generalFields = [];
 
-	];
+	private $fields = [];
 
-    private $fields = [];
-
-    public function __construct()
-    {
-        add_action('admin_init', [$this, 'settings_init']);
-        add_action('admin_menu', [$this, 'options_page']);
-        add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts'], 20);
-    }
-
-    public function saveDefaultData()
+	public function __construct()
 	{
-		
+		add_action('admin_init', [$this, 'settings_init']);
+		add_action('admin_menu', [$this, 'options_page']);
+		add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts'], 20);
 	}
 
-    public function admin_enqueue_scripts($screen)
+	public function saveDefaultData()
+	{
+	}
+
+	public function admin_enqueue_scripts($screen)
 	{
 		if ('toplevel_page_ws-price-history-settings' !== $screen) return;
 		wp_enqueue_script('ws-price-history-settings-js', WS_PRICE_HISTORY_PLUGIN_DIR_URL . 'assets/js/admin/sections.js', array(), null, true);
 		wp_enqueue_style('ws-price-history-settings-style', WS_PRICE_HISTORY_PLUGIN_DIR_URL . 'assets/css/admin/sections.css');
 	}
 
-    public function settings_init(): void
+	public function settings_init(): void
 	{
 		register_setting('ws-price-history-settings', self::WS_PRICE_HISTORY_SETTINGS_KEY);
-		
+
 		add_settings_section(
 			'ws-price-history-general-section',
-			__('General', 'ws-price-history-settings'),
+			__('General', 'ws_price_history'),
 			[$this, 'render_section'],
 			'ws-price-history-settings'
 		);
@@ -49,26 +47,26 @@ class AdminPage {
 		// );
 		add_settings_section(
 			'ws-licence-section',
-			__('Pro Version', 'ws-price-history-settings'),
+			__('Pro Version', 'ws_price_history'),
 			[$this, 'renderLicenceSection'],
-			'ws-price-history-settings'			
+			'ws-price-history-settings'
 		);
 
 		$this->addSettingFields($this->generalFields, [$this, 'render_field'], 'ws-price-history-settings', 'ws-price-history-general-section');
 		$this->addSettingFields($this->fields, [$this, 'render_field'], 'ws-price-history-settings', 'ws-price-history-button-section');
 	}
 
-    public function addSettingFields($fields, $callback, $menuPage, $section)
+	public function addSettingFields($fields, $callback, $menuPage, $section)
 	{
 		foreach ($fields as $field) {
 			add_settings_field(
-				$field['id'], 
-				__($field['label'], $menuPage), 
+				$field['id'],
+				__($field['label'], $menuPage),
 				$callback,
 				$menuPage,
-				$section, 
+				$section,
 				[
-					'label_for' => $field['id'], 
+					'label_for' => $field['id'],
 					'class' => 'wporg_row',
 					'field' => $field,
 				]
@@ -76,12 +74,12 @@ class AdminPage {
 		}
 	}
 
-    public function options_page(): void
+	public function options_page(): void
 	{
 		add_menu_page(
-			'Settings', 
-			'WS Price History Settings',
-			$this->capability, 
+			'Settings',
+			__('WS Price History Settings', 'ws_price_history'),
+			$this->capability,
 			'ws-price-history-settings',
 			[$this, 'render_options_page'],
 			'dashicons-money-alt',
@@ -89,14 +87,14 @@ class AdminPage {
 		);
 	}
 
-    public function render_options_page(): void
+	public function render_options_page(): void
 	{
 		if (!current_user_can($this->capability)) {
 			return;
 		}
 
 		if (isset($_GET['settings-updated'])) {
-			add_settings_error('ws_messages', 'ws_message', __('Settings Saved', 'ws-price-history-settings'), 'updated');
+			add_settings_error('ws_messages', 'ws_message', __('Settings Saved', 'ws-price-history'), 'updated');
 		}
 
 		global $wp_settings_sections;
@@ -130,23 +128,28 @@ class AdminPage {
 				?>
 				<div id="ws-price-history-general-section" class="active">
 					<div class="index-all-prices">
-						<p><?php echo __("Press to index all prices: ", 'ws-price-history-general-section'); ?></p>
-						<a id="bulk-index-all-prices" href="#" class="button-primary" ><?php echo __("Index all prices", 'ws-price-history-general-section');?></a>
-						<p class="success"><?php echo __("Success", 'ws-price-history-general-section'); ?></p>
-					</div> 
-                <?php do_settings_fields('ws-price-history-settings', 'ws-price-history-general-section'); ?>
-                </div>
+						<p><?php echo __("Press to index all prices: ", 'ws_price_history'); ?></p>
+						<a id="bulk-index-all-prices" href="#" class="button-primary"><?php echo __("Index all prices", 'ws_price_history'); ?></a>
+						<p class="index-success"><?php echo __("Success", 'ws_price_history'); ?></p>
+					</div>
+					<div class="remove-all-old-prices">
+						<p><?php echo __("Press to remove prices older than 30 days: ", 'ws_price_history'); ?></p>
+						<a id="bulk-remove-all-old-prices" href="#" class="button-primary"><?php echo __("Remove prices older than 30 days", 'ws_price_history'); ?></a>
+						<p class="remove-success"><?php echo __("Success", 'ws_price_history'); ?></p>
+					</div>
+					<?php do_settings_fields('ws-price-history-settings', 'ws-price-history-general-section'); ?>
+				</div>
 				<!-- <div id="ws-price-history-button-section"><?php do_settings_fields('ws-price-history-settings',  'ws-price-history-button-section'); ?></div> -->
 				<div id="ws-licence-section"><?php echo $this->renderLicenceSection(); ?></div>
 				<?php
-				submit_button('Save Settings');
+				//submit_button('Save Settings');
 				?>
 			</form>
 		</div>
 		<?php
 	}
 
-    public function render_field(array $args): void
+	public function render_field(array $args): void
 	{
 		$field = $args['field'];
 		$options = get_option(self::WS_PRICE_HISTORY_SETTINGS_KEY);
@@ -260,23 +263,25 @@ class AdminPage {
 				}
 		}
 	}
-    public function render_section(array $args): void
+	public function render_section(array $args): void
 	{
 		?>
 		<div class="<?php echo $args['id'] ?>">
 			<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('', 'ws-price-history-settings'); ?></p>
 		</div>
 
-<?php
+	<?php
 	}
-    public function renderLicenceSection(){
-		?>
-			<h2><?php echo __("Pro version features", "ws-price-history-settings"); ?></h2>
-			<ul class="pro-version-fatures-list">
-				<li class="feature"><?php echo __("More customisation options", "ws-price-history-settings"); ?></li>
-				<li class="feature"><?php echo __("Advanced support", "ws-price-history-settings"); ?></li>
-			</ul>
-			<p class="premium-version"><?php echo __("To get premium version visit this link:","ws-price-history-settings") . " ";?><a href="https://k4.pl/en/shop"><?php echo __("K4-shop","ws-price-history-settings"); ?></a></p>
-		<?php
+	public function renderLicenceSection()
+	{
+	?>
+		<h2><?php echo __("Pro version features", "ws_price_history"); ?></h2>
+		<ul class="pro-version-fatures-list">
+			<li class="feature"><?php echo __("More customisation options", "ws_price_history"); ?></li>
+			<li class="feature"><?php echo __("Automatic database table optimization", "ws_price_history"); ?></li>
+			<li class="feature"><?php echo __("Advanced support", "ws_price_history"); ?></li>
+		</ul>
+		<p class="premium-version"><?php echo __("To get premium version visit this link:", "ws_price_history") . " "; ?><a href="https://k4.pl/en/shop"><?php echo __("K4-shop", "ws-price-history-settings"); ?></a></p>
+<?php
 	}
 }

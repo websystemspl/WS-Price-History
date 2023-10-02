@@ -56,15 +56,8 @@ class DatabaseOperation
     }
   }
 
-  public function readAllRecords(int $limit, int $offset)
+  public static function getPreviousPrice($postId)
   {
-  }
-
-  public function countRecords()
-  {
-  }
-
-  public static function getPreviousPrice($postId){
     global $wpdb;
     $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
     $query = $wpdb->prepare("SELECT price as lowest_price FROM $tableNameWithPrefix WHERE post_id = %s ORDER BY date DESC LIMIT 1;", [$postId]);
@@ -94,6 +87,18 @@ class DatabaseOperation
     global $wpdb;
     $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
     $query = $wpdb->prepare("SELECT %s, MIN(price) AS lowest_price FROM $tableNameWithPrefix WHERE date >= DATE_SUB(NOW(), INTERVAL 30 DAY) GROUP BY post_id;", [DatabaseTable::getPostIdColumnName()]);
+    $result = $wpdb->get_results($query, 'ARRAY_N');
+    if ($result != null) {
+      return $result;
+    } else {
+      return null;
+    }
+  }
+  public static function removeOldPrices()
+  {
+    global $wpdb;
+    $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
+    $query = $wpdb->prepare("DELETE FROM $tableNameWithPrefix WHERE date < DATE_SUB(NOW(), INTERVAL 30 DAY);");
     $result = $wpdb->get_results($query, 'ARRAY_N');
     if ($result != null) {
       return $result;
