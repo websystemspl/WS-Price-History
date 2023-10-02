@@ -58,9 +58,6 @@
 		<copy todir="${builddir}/languages">
 			<fileset dir="${basedir}/languages" />
 		</copy>
-		<copy todir="${builddir}/templates">
-			<fileset dir="${basedir}/templates" />
-		</copy>
 		<copy todir="${builddir}/vendor">
 			<fileset dir="${basedir}/vendor" />
 		</copy>
