@@ -107,7 +107,7 @@ class AdminPage
 			<div class="information-container">
 				<div class="first-row">
 					<a href="<?php echo "https://k4.pl/en/" ?>"><img width="100px" height="100px" src="<?php echo WS_PRICE_HISTORY_PLUGIN_DIR_URL . "assets/src/img/K4-logo.png"; ?>"></img></a>
-					<p><?php echo __($pluginData['Name'], $pluginData['TextDomain']); ?></p>
+					<p><?php echo esc_html__($pluginData['Name'], $pluginData['TextDomain']); ?></p>
 				</div>
 				<div class="description">
 					<p><?php echo __($pluginData['Description'], $pluginData['TextDomain']);  ?></p>
@@ -117,7 +117,7 @@ class AdminPage
 				<?php
 				foreach ($sections as $section) {
 				?>
-					<a href="<?php echo "#" . $section["id"]; ?>"><?php echo $section["title"]; ?></a>
+					<a href="<?php echo "#" . esc_attr($section["id"]); ?>"><?php echo esc_html($section["title"]); ?></a>
 				<?php
 				}
 				?>
@@ -128,14 +128,14 @@ class AdminPage
 				?>
 				<div id="ws-price-history-general-section" class="active">
 					<div class="index-all-prices">
-						<p><?php echo __("Press to index all prices: ", 'ws_price_history'); ?></p>
-						<a id="bulk-index-all-prices" href="#" class="button-primary"><?php echo __("Index all prices", 'ws_price_history'); ?></a>
-						<p class="index-success"><?php echo __("Success", 'ws_price_history'); ?></p>
+						<p><?php echo esc_html__("Press to index all prices: ", 'ws_price_history'); ?></p>
+						<a id="bulk-index-all-prices" href="#" class="button-primary"><?php echo esc_html__("Index all prices", 'ws_price_history'); ?></a>
+						<p class="index-success"><?php echo esc_html__("Success", 'ws_price_history'); ?></p>
 					</div>
 					<div class="remove-all-old-prices">
-						<p><?php echo __("Press to remove prices older than 30 days: ", 'ws_price_history'); ?></p>
-						<a id="bulk-remove-all-old-prices" href="#" class="button-primary"><?php echo __("Remove prices older than 30 days", 'ws_price_history'); ?></a>
-						<p class="remove-success"><?php echo __("Success", 'ws_price_history'); ?></p>
+						<p><?php echo esc_html__("Press to remove prices older than 30 days: ", 'ws_price_history'); ?></p>
+						<a id="bulk-remove-all-old-prices" href="#" class="button-primary"><?php echo esc_html__("Remove prices older than 30 days", 'ws_price_history'); ?></a>
+						<p class="remove-success"><?php echo esc_html__("Success", 'ws_price_history'); ?></p>
 					</div>
 					<?php do_settings_fields('ws-price-history-settings', 'ws-price-history-general-section'); ?>
 				</div>
@@ -275,13 +275,13 @@ class AdminPage
 	public function renderLicenceSection()
 	{
 	?>
-		<h2><?php echo __("Pro version features", "ws_price_history"); ?></h2>
+		<h2><?php echo esc_html__("Pro version features", "ws_price_history"); ?></h2>
 		<ul class="pro-version-fatures-list">
-			<li class="feature"><?php echo __("More customisation options", "ws_price_history"); ?></li>
-			<li class="feature"><?php echo __("Automatic database table optimization", "ws_price_history"); ?></li>
-			<li class="feature"><?php echo __("Advanced support", "ws_price_history"); ?></li>
+			<li class="feature"><?php echo esc_html__("More customisation options", "ws_price_history"); ?></li>
+			<li class="feature"><?php echo esc_html__("Automatic database table optimization", "ws_price_history"); ?></li>
+			<li class="feature"><?php echo esc_html__("Advanced support", "ws_price_history"); ?></li>
 		</ul>
-		<p class="premium-version"><?php echo __("To get premium version visit this link:", "ws_price_history") . " "; ?><a href="https://k4.pl/en/shop"><?php echo __("K4-shop", "ws-price-history-settings"); ?></a></p>
+		<p class="premium-version"><?php echo esc_html__("To get premium version visit this link:", "ws_price_history") . " "; ?><a href="https://k4.pl/en/shop"><?php echo esc_html__("K4-shop", "ws-price-history-settings"); ?></a></p>
 <?php
 	}
 }

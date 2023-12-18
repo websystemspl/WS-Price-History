@@ -45,7 +45,7 @@ class Actions
 
     public function index_all_prices()
     {
-        if ($_POST['action'] = 'indexAllPrices') {
+        if ($_POST['action'] === 'indexAllPrices') {
             $args = array(
                 'post_type'      => 'product',
                 'posts_per_page' => -1,
