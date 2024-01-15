@@ -100,17 +100,17 @@ class AdminPage
 		global $wp_settings_sections;
 		$page = $_GET['page'];
 		$sections = $wp_settings_sections[$page];
-		$pluginData = get_plugin_data(WS_PRICE_HISTORY_PLUGIN_DIR_PATH . 'ws-price-history-for-woocommerce.php');
+		$pluginData = get_plugin_data(WS_PRICE_HISTORY_PLUGIN_DIR_PATH . 'ws-price-history.php');
 ?>
 		<div id="settings-container" class="wrap">
 			<div class="messages-box"><?php settings_errors('ws_messages'); ?></div>
 			<div class="information-container">
 				<div class="first-row">
-					<a href="<?php echo "https://k4.pl/en/" ?>"><img width="100px" height="100px" src="<?php echo WS_PRICE_HISTORY_PLUGIN_DIR_URL . "assets/src/img/K4-logo.png"; ?>"></img></a>
+					<a href="<?php echo "https://k4.pl/en/" ?>"><img width="100px" height="100px" src="<?php echo esc_attr(WS_PRICE_HISTORY_PLUGIN_DIR_URL . "assets/src/img/K4-logo.png"); ?>"></img></a>
 					<p><?php echo esc_html__($pluginData['Name'], $pluginData['TextDomain']); ?></p>
 				</div>
 				<div class="description">
-					<p><?php echo __($pluginData['Description'], $pluginData['TextDomain']);  ?></p>
+					<p><?php echo __($pluginData['Description'], $pluginData['TextDomain']); ?></p>
 				</div>
 			</div>
 			<div class="settings-tabs">
@@ -140,7 +140,7 @@ class AdminPage
 					<?php do_settings_fields('ws-price-history-settings', 'ws-price-history-general-section'); ?>
 				</div>
 				<!-- <div id="ws-price-history-button-section"><?php do_settings_fields('ws-price-history-settings',  'ws-price-history-button-section'); ?></div> -->
-				<div id="ws-licence-section"><?php echo $this->renderLicenceSection(); ?></div>
+				<div id="ws-licence-section"><?php echo esc_html($this->renderLicenceSection()); ?></div>
 				<?php
 				//submit_button('Save Settings');
 				?>
@@ -156,7 +156,7 @@ class AdminPage
 		switch ($field['type']) {
 			case "text": {
 		?>
-					<input type="text" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
+					<input type="text" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -165,7 +165,7 @@ class AdminPage
 				}
 			case "checkbox": {
 				?>
-					<input type="checkbox" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]" value="1" <?php echo isset($options[$field['id']]) ? (checked($options[$field['id']], 1, false)) : (''); ?>>
+					<input type="checkbox" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="1" <?php echo isset($options[$field['id']]) ? (checked($options[$field['id']], 1, false)) : (''); ?>>
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -174,7 +174,7 @@ class AdminPage
 				}
 			case "textarea": {
 				?>
-					<textarea id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]"><?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?></textarea>
+					<textarea id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]"><?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?></textarea>
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -183,10 +183,10 @@ class AdminPage
 				}
 			case "select": {
 				?>
-					<select id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]">
+					<select id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]">
 						<?php foreach ($field['options'] as $key => $option) { ?>
-							<option value="<?php echo $key; ?>" <?php echo isset($options[$field['id']]) ? (selected($options[$field['id']], $key, false)) : (''); ?>>
-								<?php echo $option; ?>
+							<option value="<?php echo esc_html($key); ?>" <?php echo isset($options[$field['id']]) ? (selected($options[$field['id']], $key, false)) : (''); ?>>
+								<?php echo esc_html($option); ?>
 							</option>
 						<?php } ?>
 					</select>
@@ -198,7 +198,7 @@ class AdminPage
 				}
 			case "password": {
 				?>
-					<input type="password" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
+					<input type="password" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -218,7 +218,7 @@ class AdminPage
 				}
 			case "email": {
 				?>
-					<input type="email" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
+					<input type="email" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -227,7 +227,7 @@ class AdminPage
 				}
 			case "url": {
 				?>
-					<input type="url" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
+					<input type="url" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -236,7 +236,7 @@ class AdminPage
 				}
 			case "color": {
 				?>
-					<input type="color" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
+					<input type="color" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -245,7 +245,7 @@ class AdminPage
 				}
 			case "date": {
 				?>
-					<input type="date" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
+					<input type="date" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -254,7 +254,7 @@ class AdminPage
 				}
 			case "number": {
 				?>
-					<input type="number" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo self::WS_PRICE_HISTORY_SETTINGS_KEY; ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>" min="0" max="100">
+					<input type="number" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>" min="0" max="100">
 					<p class="description">
 						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
 					</p>
@@ -266,7 +266,7 @@ class AdminPage
 	public function render_section(array $args): void
 	{
 		?>
-		<div class="<?php echo $args['id'] ?>">
+		<div class="<?php echo esc_attr($args['id']); ?>">
 			<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('', 'ws-price-history-settings'); ?></p>
 		</div>
 

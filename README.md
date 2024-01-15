@@ -1,12 +1,12 @@
-Plugin Name:       WS Price History For Woocommerce  
-Contributors:      Web Systems  
-Tags:              Woocommerce, Prices, History
+Plugin Name:       WS Price History  
+Contributors:      websystems2006
+Tags:              Prices, History
 Requires at least: 6.0  
-Tested up to:      6.2.2  
-Stable tag:        1.0.0  
-License:           GPL v2 or later  
-License URI:       https://www.gnu.org/licenses/gpl-2.0.html  
-Update URI:        https://example.com/my-plugin/  
+Tested up to:      6.4  
+Requires PHP:      7.0
+Stable tag:        1.0
+License:           GPLv3
+License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
   
@@ -26,16 +26,22 @@ Set up the plugin on the settings page.
   
 = How do I uninstall the plugin? =  
 
-To uninstall the plugin:
-Deactivate the plugin.
-Delete the plugin.
+To uninstall the plugin: 
+Deactivate the plugin. 
+Delete the plugin. 
   
 == Screenshots ==  
-screenshot-1.png  
-screenshot-2.png  
-screenshot-3.png  
+
+1. screenshot-1.png  
+2. screenshot-2.png  
+3. screenshot-3.png  
   
 == Changelog ==
 
 = 1.0 =
+* Plugin released. 
+
+==  Upgrade Notice ==  
+
+= 1.0 =  
 * Plugin released. 

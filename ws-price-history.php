@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Plugin Name:       WS Price History For Woocommerce
+ * Plugin Name:       WS Price History
  * Text Domain:       ws_price_history
  * Description:       Add price history for products
  * Version:           1.0.2
