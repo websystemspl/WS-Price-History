@@ -14,7 +14,8 @@ function indexAllPrices() {
         dataType: "json",
         url: ajax_object.ajax_url,
         data: {
-            action: "index_all_prices"
+            action: "index_all_prices",
+            nonce: ajax_object.nonce
         },
         success: function (response) {
             jQuery('#index-placeholder').remove();
@@ -30,7 +31,8 @@ function removeOldPrices() {
         dataType: "json",
         url: ajax_object.ajax_url,
         data: {
-            action: "remove_old_prices"
+            action: "remove_old_prices",
+            nonce: ajax_object.nonce
         },
         success: function (response) {
             jQuery('#index-placeholder').remove();
