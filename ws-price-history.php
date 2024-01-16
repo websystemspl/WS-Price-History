@@ -2,7 +2,7 @@
 
 /*
  * Plugin Name:       WS Price History
- * Text Domain:       ws_price_history
+ * Text Domain:       ws-price-history
  * Description:       Add price history for products
  * Version:           1.0.2
  * Requires at least: 6.0
@@ -23,7 +23,7 @@ class WsPriceHistory
 {
   public function __construct()
   {
-    load_plugin_textdomain('ws_price_history', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('ws-price-history', false, dirname(plugin_basename(__FILE__)) . '/languages');
     if (!defined('WS_PRICE_HISTORY_PLUGIN_DIR_PATH')) {
       define('WS_PRICE_HISTORY_PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
     }

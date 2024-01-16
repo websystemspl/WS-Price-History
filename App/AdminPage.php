@@ -35,7 +35,7 @@ class AdminPage
 
 		add_settings_section(
 			'ws-price-history-general-section',
-			__('General', 'ws_price_history'),
+			__('General', 'ws-price-history'),
 			[$this, 'render_section'],
 			'ws-price-history-settings'
 		);
@@ -47,7 +47,7 @@ class AdminPage
 		// );
 		add_settings_section(
 			'ws-licence-section',
-			__('Pro Version', 'ws_price_history'),
+			__('Pro Version', 'ws-price-history'),
 			[$this, 'renderLicenceSection'],
 			'ws-price-history-settings'
 		);
@@ -78,7 +78,7 @@ class AdminPage
 	{
 		add_menu_page(
 			'Settings',
-			__('WS Price History Settings', 'ws_price_history'),
+			__('WS Price History Settings', 'ws-price-history'),
 			$this->capability,
 			'ws-price-history-settings',
 			[$this, 'render_options_page'],
@@ -128,14 +128,14 @@ class AdminPage
 				?>
 				<div id="ws-price-history-general-section" class="active">
 					<div class="index-all-prices">
-						<p><?php echo esc_html__("Press to index all prices: ", 'ws_price_history'); ?></p>
-						<a id="bulk-index-all-prices" href="#" class="button-primary"><?php echo esc_html__("Index all prices", 'ws_price_history'); ?></a>
-						<p class="index-success"><?php echo esc_html__("Success", 'ws_price_history'); ?></p>
+						<p><?php echo esc_html__("Press to index all prices: ", 'ws-price-history'); ?></p>
+						<a id="bulk-index-all-prices" href="#" class="button-primary"><?php echo esc_html__("Index all prices", 'ws-price-history'); ?></a>
+						<p class="index-success"><?php echo esc_html__("Success", 'ws-price-history'); ?></p>
 					</div>
 					<div class="remove-all-old-prices">
-						<p><?php echo esc_html__("Press to remove prices older than 30 days: ", 'ws_price_history'); ?></p>
-						<a id="bulk-remove-all-old-prices" href="#" class="button-primary"><?php echo esc_html__("Remove prices older than 30 days", 'ws_price_history'); ?></a>
-						<p class="remove-success"><?php echo esc_html__("Success", 'ws_price_history'); ?></p>
+						<p><?php echo esc_html__("Press to remove prices older than 30 days: ", 'ws-price-history'); ?></p>
+						<a id="bulk-remove-all-old-prices" href="#" class="button-primary"><?php echo esc_html__("Remove prices older than 30 days", 'ws-price-history'); ?></a>
+						<p class="remove-success"><?php echo esc_html__("Success", 'ws-price-history'); ?></p>
 					</div>
 					<?php do_settings_fields('ws-price-history-settings', 'ws-price-history-general-section'); ?>
 				</div>
@@ -275,13 +275,13 @@ class AdminPage
 	public function renderLicenceSection()
 	{
 	?>
-		<h2><?php echo esc_html__("Pro version features", "ws_price_history"); ?></h2>
+		<h2><?php echo esc_html__("Pro version features", "ws-price-history"); ?></h2>
 		<ul class="pro-version-fatures-list">
-			<li class="feature"><?php echo esc_html__("More customisation options", "ws_price_history"); ?></li>
-			<li class="feature"><?php echo esc_html__("Automatic database table optimization", "ws_price_history"); ?></li>
-			<li class="feature"><?php echo esc_html__("Advanced support", "ws_price_history"); ?></li>
+			<li class="feature"><?php echo esc_html__("More customisation options", "ws-price-history"); ?></li>
+			<li class="feature"><?php echo esc_html__("Automatic database table optimization", "ws-price-history"); ?></li>
+			<li class="feature"><?php echo esc_html__("Advanced support", "ws-price-history"); ?></li>
 		</ul>
-		<p class="premium-version"><?php echo esc_html__("To get premium version visit this link:", "ws_price_history") . " "; ?><a href="https://k4.pl/en/shop"><?php echo esc_html__("K4-shop", "ws-price-history-settings"); ?></a></p>
+		<p class="premium-version"><?php echo esc_html__("To get premium version visit this link:", "ws-price-history") . " "; ?><a href="https://k4.pl/en/shop"><?php echo esc_html__("K4-shop", "ws-price-history-settings"); ?></a></p>
 <?php
 	}
 }
