@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ws_event_calendar" basedir="." default="build">
-	<property name="builddir" value="${basedir}/ws_price_history" />
+	<property name="builddir" value="${basedir}/ws-price-history" />
 	<property name="password" value="${password}" />
 	<property name="update_server" value="${update_server}" />
 	<property name="todir" value="${todir}" />
@@ -68,8 +68,8 @@
 				<include name="*.txt" />
 			</fileset>
 		</copy>
-		<zip destfile="${basedir}/ws_price_history.zip">
-			<zipfileset dir="${builddir}" prefix="ws_price_history" />
+		<zip destfile="${basedir}/ws-price-history.zip">
+			<zipfileset dir="${builddir}" prefix="ws-price-history" />
 		</zip>
 	</target>
 	<target name="upload-release">
