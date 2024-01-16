@@ -110,7 +110,7 @@ class AdminPage
 					<p><?php echo esc_html__($pluginData['Name'], $pluginData['TextDomain']); ?></p>
 				</div>
 				<div class="description">
-					<p><?php echo __($pluginData['Description'], $pluginData['TextDomain']); ?></p>
+					<p><?php echo __(wp_kses($pluginData['Description'], 'post'), $pluginData['TextDomain']); ?></p>
 				</div>
 			</div>
 			<div class="settings-tabs">
