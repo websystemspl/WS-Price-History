@@ -1,9 +1,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: WS Price History For Woocommerce\n"
+"Project-Id-Version: WS Price History\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-02 10:05+0000\n"
+"POT-Creation-Date: 2024-01-16 15:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,8 +13,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.3.1\n"
-"X-Domain: ws_price_history"
+"X-Loco-Version: 2.6.6; wp-6.4.2\n"
+"X-Domain: ws-price-history"
 
 #. Description of the plugin
 msgid "Add price history for products"
@@ -64,12 +64,12 @@ msgstr ""
 msgid "Remove prices older than 30 days"
 msgstr ""
 
-#: App/AdminPage.php:133 App/AdminPage.php:138
-msgid "Success"
+#: App/AdminPage.php:97
+msgid "Settings Saved"
 msgstr ""
 
-#: App/Actions.php:25
-msgid "The lowest price from 30 days: "
+#: App/AdminPage.php:133 App/AdminPage.php:138
+msgid "Success"
 msgstr ""
 
 #: App/AdminPage.php:284
@@ -81,7 +81,7 @@ msgid "Web Systems"
 msgstr ""
 
 #. Name of the plugin
-msgid "WS Price History For Woocommerce"
+msgid "WS Price History"
 msgstr ""
 
 #: App/AdminPage.php:81
