@@ -73,6 +73,6 @@
 		</zip>
 	</target>
 	<target name="upload-release">
-		<scp file="ws_price_history.zip" todir="${todir}" password="${password}" trust="true" />
+		<scp file="ws-price-history.zip" todir="${todir}" password="${password}" trust="true" />
 	</target>
 </project>
