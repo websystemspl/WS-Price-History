@@ -24,7 +24,7 @@ class Actions
                 $html = "<p class='the-lowest-price'>";
                 $html .= __("The lowest price from 30 days: ", "ws_price_history") . wc_price($price);
                 $html .= "</p>";
-                echo $html;
+                echo wp_kses_post($html);
             }
         }
     }
@@ -33,17 +33,19 @@ class Actions
     {
         $postType = $post->post_type;
         if ($postType === 'product') {
-            $postID = $_POST['post_ID'];
-            $product = \wc_get_product($postID);
-            $prices = get_post_meta($product->get_id(), "_price");
-            if (count($prices) === 1) {
-                $productID = $product->get_id();
-                $price = $product->get_price();
-                $currentDate = date('Y-m-d');
-                $previousPrice = DatabaseOperation::getPreviousPrice($postID);
-                if ($previousPrice != $price) {
-                    $record = new Record('', $productID, $price, date_create_from_format('Y-m-d', $currentDate));
-                    $record->setId(DatabaseOperation::write($record));
+            if (isset($_POST['post_ID'])) {
+                $postID = sanitize_text_field($_POST['post_ID']);
+                $product = \wc_get_product($postID);
+                $prices = get_post_meta($product->get_id(), "_price");
+                if (count($prices) === 1) {
+                    $productID = $product->get_id();
+                    $price = $product->get_price();
+                    $currentDate = date('Y-m-d');
+                    $previousPrice = DatabaseOperation::getPreviousPrice($postID);
+                    if ($previousPrice != $price) {
+                        $record = new Record('', $productID, $price, date_create_from_format('Y-m-d', $currentDate));
+                        $record->setId(DatabaseOperation::write($record));
+                    }
                 }
             }
         }
@@ -51,7 +53,7 @@ class Actions
 
     public function index_all_prices()
     {
-        if (isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'ws-price-history-nonce')) {
+        if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ws-price-history-nonce')) {
             $args = array(
                 'post_type'      => 'product',
                 'posts_per_page' => -1,
@@ -73,7 +75,7 @@ class Actions
 
     public function remove_old_prices()
     {
-        if (isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'ws-price-history-nonce')) {
+        if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ws-price-history-nonce')) {
             DatabaseOperation::removeOldPrices();
             json_encode("done");
         } else {

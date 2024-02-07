@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WS Price History For Woocommerce\n"
+"Project-Id-Version: WS Price History\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-02 09:40+0000\n"
-"PO-Revision-Date: 2023-10-02 10:06+0000\n"
+"POT-Creation-Date: 2024-01-16 15:03+0000\n"
+"PO-Revision-Date: 2024-01-16 15:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -13,12 +13,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.3.1\n"
-"X-Domain: ws_price_history"
+"X-Loco-Version: 2.6.6; wp-6.4.2\n"
+"X-Domain: ws-price-history"
 
 #. Description of the plugin
 msgid "Add price history for products"
-msgstr "Dodaj historię cen dla produktów"
+msgstr "Dodaj historię cen produktów"
 
 #: App/AdminPage.php:282
 msgid "Advanced support"
@@ -38,7 +38,7 @@ msgstr "https://www.web-systems.pl/"
 
 #: App/AdminPage.php:132
 msgid "Index all prices"
-msgstr "Indekuj wszystkie ceny"
+msgstr "Zindeksuj wszystkie ceny"
 
 #: App/AdminPage.php:280
 msgid "More customisation options"
@@ -62,15 +62,15 @@ msgstr "Funkcje wersji Pro"
 
 #: App/AdminPage.php:137
 msgid "Remove prices older than 30 days"
-msgstr "Usuń ceny starsze niż 30 dni: "
+msgstr "Usuń ceny starsze niż 30 dni"
+
+#: App/AdminPage.php:97
+msgid "Settings Saved"
+msgstr "Ustawienia zapisane"
 
 #: App/AdminPage.php:133 App/AdminPage.php:138
 msgid "Success"
 msgstr "Sukces"
-
-#: App/Actions.php:25
-msgid "The lowest price from 30 days: "
-msgstr "Najniższa cena od 30 dni: "
 
 #: App/AdminPage.php:284
 msgid "To get premium version visit this link:"
@@ -81,9 +81,9 @@ msgid "Web Systems"
 msgstr "Web Systems"
 
 #. Name of the plugin
-msgid "WS Price History For Woocommerce"
-msgstr "WS Historia Cen Dla Woocommerce"
+msgid "WS Price History"
+msgstr "Historia cen WS"
 
 #: App/AdminPage.php:81
 msgid "WS Price History Settings"
-msgstr "WS Historia Cen Ustawienia"
+msgstr "Ustawienia Historii Cen WS"
