@@ -13,7 +13,6 @@ class DatabaseOperation
     global $wpdb;
     $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
     $query = $wpdb->prepare('SHOW TABLES LIKE %s', $tableNameWithPrefix);
-
     if ($wpdb->get_var($query) === $tableNameWithPrefix) {
       $result = $wpdb->get_row(
         "SELECT " .

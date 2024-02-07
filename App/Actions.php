@@ -33,19 +33,16 @@ class Actions
     {
         $postType = $post->post_type;
         if ($postType === 'product') {
-            if (isset($_POST['post_ID'])) {
-                $postID = sanitize_text_field($_POST['post_ID']);
-                $product = \wc_get_product($postID);
-                $prices = get_post_meta($product->get_id(), "_price");
-                if (count($prices) === 1) {
-                    $productID = $product->get_id();
-                    $price = $product->get_price();
-                    $currentDate = date('Y-m-d');
-                    $previousPrice = DatabaseOperation::getPreviousPrice($postID);
-                    if ($previousPrice != $price) {
-                        $record = new Record('', $productID, $price, date_create_from_format('Y-m-d', $currentDate));
-                        $record->setId(DatabaseOperation::write($record));
-                    }
+            $product = \wc_get_product($postID);
+            $prices = get_post_meta($product->get_id(), "_price");
+            if (count($prices) === 1) {
+                $productID = $product->get_id();
+                $price = $product->get_price();
+                $currentDate = gmdate('Y-m-d');
+                $previousPrice = DatabaseOperation::getPreviousPrice($postID);
+                if ($previousPrice != $price) {
+                    $record = new Record('', $productID, $price, date_create_from_format('Y-m-d', $currentDate));
+                    $record->setId(DatabaseOperation::write($record));
                 }
             }
         }
@@ -60,16 +57,16 @@ class Actions
             );
             $loop = new \WP_Query($args);
             $products = $loop->posts;
-            $currentDate = date('Y-m-d');
+            $currentDate = gmdate('Y-m-d');
             foreach ($products as $product) {
                 $product = \wc_get_product($product->ID);
                 $price = $product->get_price();
                 $record = new Record('', $product->id, $price, date_create_from_format('Y-m-d', $currentDate));
                 $record->setId(DatabaseOperation::write($record));
             }
-            json_encode("done");
+            wp_json_encode("done");
         } else {
-            json_encode("error");
+            wp_json_encode("error");
         }
     }
 
@@ -77,9 +74,9 @@ class Actions
     {
         if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ws-price-history-nonce')) {
             DatabaseOperation::removeOldPrices();
-            json_encode("done");
+            wp_json_encode("done");
         } else {
-            json_encode("error");
+            wp_json_encode("error");
         }
     }
 }
