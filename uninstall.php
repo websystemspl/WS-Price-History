@@ -4,12 +4,12 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
   die;
 }
 
-function dropTable()
+function wsph_drop_table()
 {
   global $wpdb;
   $tableNameWithPrefix = $wpdb->prefix . 'ws_price_history';
-  $query = $wpdb->prepare('DROP TABLE IF EXISTS ' . $tableNameWithPrefix);
+  $query = $wpdb->prepare('DROP TABLE IF EXISTS %s', $tableNameWithPrefix);
   $wpdb->query($query);
 }
 
-dropTable();
+wsph_drop_table();

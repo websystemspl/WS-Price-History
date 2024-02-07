@@ -25,8 +25,8 @@ class AdminPage
 	public function admin_enqueue_scripts($screen)
 	{
 		if ('toplevel_page_ws-price-history-settings' !== $screen) return;
-		wp_enqueue_script('ws-price-history-settings-js', WS_PRICE_HISTORY_PLUGIN_DIR_URL . 'assets/js/admin/sections.js', array(), null, true);
-		wp_enqueue_style('ws-price-history-settings-style', WS_PRICE_HISTORY_PLUGIN_DIR_URL . 'assets/css/admin/sections.css');
+		wp_enqueue_script('ws-price-history-settings-js', WSPH_PRICE_HISTORY_PLUGIN_DIR_URL . 'assets/js/admin/sections.js', array(), null, true);
+		wp_enqueue_style('ws-price-history-settings-style', WSPH_PRICE_HISTORY_PLUGIN_DIR_URL . 'assets/css/admin/sections.css');
 	}
 
 	public function settings_init(): void
@@ -61,7 +61,7 @@ class AdminPage
 		foreach ($fields as $field) {
 			add_settings_field(
 				$field['id'],
-				__($field['label'], $menuPage),
+				$field['label'],
 				$callback,
 				$menuPage,
 				$section,
@@ -98,19 +98,22 @@ class AdminPage
 		}
 
 		global $wp_settings_sections;
-		$page = $_GET['page'];
-		$sections = $wp_settings_sections[$page];
-		$pluginData = get_plugin_data(WS_PRICE_HISTORY_PLUGIN_DIR_PATH . 'ws-price-history.php');
+		if (isset($_GET['page']) && sanitize_text_field($_GET['page']) === "ws-price-history-settings") {
+			$page = sanitize_text_field($_GET['page']);
+			$sections = $wp_settings_sections[$page];
+		} else {
+			return;
+		}
 ?>
 		<div id="settings-container" class="wrap">
 			<div class="messages-box"><?php settings_errors('ws_messages'); ?></div>
 			<div class="information-container">
 				<div class="first-row">
-					<a href="<?php echo "https://k4.pl/en/" ?>"><img width="100px" height="100px" src="<?php echo esc_attr(WS_PRICE_HISTORY_PLUGIN_DIR_URL . "assets/src/img/K4-logo.png"); ?>"></img></a>
-					<p><?php echo esc_html__($pluginData['Name'], $pluginData['TextDomain']); ?></p>
+					<a href="<?php echo "https://k4.pl/en/" ?>"><img width="100px" height="100px" src="<?php echo esc_attr(WSPH_PRICE_HISTORY_PLUGIN_DIR_URL . "assets/src/img/K4-logo.png"); ?>"></img></a>
+					<p><?php echo esc_html__(' WS Price History', 'ws-price-history'); ?></p>
 				</div>
 				<div class="description">
-					<p><?php echo __(wp_kses($pluginData['Description'], 'post'), $pluginData['TextDomain']); ?></p>
+					<p><?php echo esc_html__('Price history for products.', 'ws-price-history'); ?></p>
 				</div>
 			</div>
 			<div class="settings-tabs">
@@ -158,7 +161,7 @@ class AdminPage
 		?>
 					<input type="text" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -167,7 +170,7 @@ class AdminPage
 				?>
 					<input type="checkbox" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="1" <?php echo isset($options[$field['id']]) ? (checked($options[$field['id']], 1, false)) : (''); ?>>
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -176,7 +179,7 @@ class AdminPage
 				?>
 					<textarea id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]"><?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?></textarea>
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -191,7 +194,7 @@ class AdminPage
 						<?php } ?>
 					</select>
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -200,7 +203,7 @@ class AdminPage
 				?>
 					<input type="password" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -220,7 +223,7 @@ class AdminPage
 				?>
 					<input type="email" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -229,7 +232,7 @@ class AdminPage
 				?>
 					<input type="url" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -238,7 +241,7 @@ class AdminPage
 				?>
 					<input type="color" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -247,7 +250,7 @@ class AdminPage
 				?>
 					<input type="date" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>">
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 				<?php
 					break;
@@ -256,7 +259,7 @@ class AdminPage
 				?>
 					<input type="number" id="<?php echo esc_attr($field['id']); ?>" name="<?php echo esc_attr(self::WS_PRICE_HISTORY_SETTINGS_KEY); ?>[<?php echo esc_attr($field['id']); ?>]" value="<?php echo isset($options[$field['id']]) ? esc_attr($options[$field['id']]) : ''; ?>" min="0" max="100">
 					<p class="description">
-						<?php esc_html_e($field['description'], 'ws-price-history-settings'); ?>
+						<?php echo esc_html($field['description']); ?>
 					</p>
 		<?php
 					break;
