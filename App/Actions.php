@@ -24,7 +24,7 @@ class Actions
                 $html = "<p class='the-lowest-price'>";
                 $html .= __("The lowest price from 30 days: ", "ws_price_history") . wc_price($price);
                 $html .= "</p>";
-                echo $html;
+                echo wp_kses_post($html);
             }
         }
     }
