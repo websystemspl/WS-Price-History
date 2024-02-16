@@ -22,7 +22,7 @@ class Actions
             $price = DatabaseOperation::readOnePrice($product->id);
             if (!is_null($price)) {
                 $html = "<p class='the-lowest-price'>";
-                $html .= __("The lowest price from 30 days: ", "ws_price_history") . wc_price($price);
+                $html .= __("The lowest price from 30 days: ", "ws-price-history") . wc_price($price);
                 $html .= "</p>";
                 echo wp_kses_post($html);
             }
