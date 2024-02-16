@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WS Price History\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-07 11:03+0000\n"
+"POT-Creation-Date: 2024-02-16 07:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,15 +16,15 @@ msgstr ""
 "X-Loco-Version: 2.6.6; wp-6.4.2\n"
 "X-Domain: ws-price-history"
 
-#: App/AdminPage.php:113
+#: App/AdminPage.php:107
 msgid " WS Price History"
 msgstr ""
 
-#: App/AdminPage.php:285
+#: App/AdminPage.php:279
 msgid "Advanced support"
 msgstr ""
 
-#: App/AdminPage.php:284
+#: App/AdminPage.php:278
 msgid "Automatic database table optimization"
 msgstr ""
 
@@ -36,48 +36,56 @@ msgstr ""
 msgid "https://www.k4.pl/"
 msgstr ""
 
-#: App/AdminPage.php:135
+#: App/AdminPage.php:129
 msgid "Index all prices"
 msgstr ""
 
-#: App/AdminPage.php:283
+#: App/AdminPage.php:281
+msgid "K4-shop"
+msgstr ""
+
+#: App/AdminPage.php:277
 msgid "More customisation options"
 msgstr ""
 
-#: App/AdminPage.php:134
+#: App/AdminPage.php:128
 msgid "Press to index all prices: "
 msgstr ""
 
-#: App/AdminPage.php:139
+#: App/AdminPage.php:133
 msgid "Press to remove prices older than 30 days: "
 msgstr ""
 
 #. Description of the plugin
-#: App/AdminPage.php:116
+#: App/AdminPage.php:110
 msgid "Price history for products."
 msgstr ""
 
-#: App/AdminPage.php:50
+#: App/AdminPage.php:44
 msgid "Pro Version"
 msgstr ""
 
-#: App/AdminPage.php:281
+#: App/AdminPage.php:275
 msgid "Pro version features"
 msgstr ""
 
-#: App/AdminPage.php:140
+#: App/AdminPage.php:134
 msgid "Remove prices older than 30 days"
 msgstr ""
 
-#: App/AdminPage.php:97
+#: App/AdminPage.php:91
 msgid "Settings Saved"
 msgstr ""
 
-#: App/AdminPage.php:136 App/AdminPage.php:141
+#: App/AdminPage.php:130 App/AdminPage.php:135
 msgid "Success"
 msgstr ""
 
-#: App/AdminPage.php:287
+#: App/Actions.php:25
+msgid "The lowest price from 30 days: "
+msgstr ""
+
+#: App/AdminPage.php:281
 msgid "To get premium version visit this link:"
 msgstr ""
 
@@ -89,6 +97,6 @@ msgstr ""
 msgid "WS Price History"
 msgstr ""
 
-#: App/AdminPage.php:81
+#: App/AdminPage.php:75
 msgid "WS Price History Settings"
 msgstr ""

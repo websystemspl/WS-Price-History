@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WS Price History\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-16 15:03+0000\n"
-"PO-Revision-Date: 2024-02-07 11:04+0000\n"
+"PO-Revision-Date: 2024-02-16 07:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polski\n"
 "Language: pl_PL\n"
@@ -16,15 +16,15 @@ msgstr ""
 "X-Loco-Version: 2.6.6; wp-6.4.2\n"
 "X-Domain: ws-price-history"
 
-#: App/AdminPage.php:113
+#: App/AdminPage.php:107
 msgid " WS Price History"
 msgstr "Historia cen WS"
 
-#: App/AdminPage.php:285
+#: App/AdminPage.php:279
 msgid "Advanced support"
 msgstr "Zaawansowane wsparcie"
 
-#: App/AdminPage.php:284
+#: App/AdminPage.php:278
 msgid "Automatic database table optimization"
 msgstr "Automatyczna optymalizacja tabeli bazy danych"
 
@@ -36,49 +36,57 @@ msgstr "Ogólne"
 msgid "https://www.k4.pl/"
 msgstr "https://www.k4.pl/"
 
-#: App/AdminPage.php:135
+#: App/AdminPage.php:129
 msgid "Index all prices"
 msgstr "Zindeksuj wszystkie ceny"
 
-#: App/AdminPage.php:283
+#: App/AdminPage.php:281
+msgid "K4-shop"
+msgstr "K4-sklep"
+
+#: App/AdminPage.php:277
 msgid "More customisation options"
 msgstr "Więcej opcji dostosowywania"
 
-#: App/AdminPage.php:134
+#: App/AdminPage.php:128
 msgid "Press to index all prices: "
 msgstr "Naciśnij, aby zindeksować wszystkie ceny: "
 
-#: App/AdminPage.php:139
+#: App/AdminPage.php:133
 msgid "Press to remove prices older than 30 days: "
 msgstr "Naciśnij, aby usunąć ceny starsze niż 30 dni: "
 
 #. Description of the plugin
-#: App/AdminPage.php:116
+#: App/AdminPage.php:110
 #| msgid "Add price history for products"
 msgid "Price history for products."
 msgstr "Dodaj historię cen produktów"
 
-#: App/AdminPage.php:50
+#: App/AdminPage.php:44
 msgid "Pro Version"
 msgstr "Wersja Pro"
 
-#: App/AdminPage.php:281
+#: App/AdminPage.php:275
 msgid "Pro version features"
 msgstr "Funkcje wersji Pro"
 
-#: App/AdminPage.php:140
+#: App/AdminPage.php:134
 msgid "Remove prices older than 30 days"
 msgstr "Usuń ceny starsze niż 30 dni"
 
-#: App/AdminPage.php:97
+#: App/AdminPage.php:91
 msgid "Settings Saved"
 msgstr "Ustawienia zapisane"
 
-#: App/AdminPage.php:136 App/AdminPage.php:141
+#: App/AdminPage.php:130 App/AdminPage.php:135
 msgid "Success"
 msgstr "Sukces"
 
-#: App/AdminPage.php:287
+#: App/Actions.php:25
+msgid "The lowest price from 30 days: "
+msgstr "Najniższa cena z ostatnich 30 dni: "
+
+#: App/AdminPage.php:281
 msgid "To get premium version visit this link:"
 msgstr "Aby uzyskać wersję premium, odwiedź ten link:"
 
@@ -90,6 +98,6 @@ msgstr "Web Systems"
 msgid "WS Price History"
 msgstr "Historia cen WS"
 
-#: App/AdminPage.php:81
+#: App/AdminPage.php:75
 msgid "WS Price History Settings"
 msgstr "Ustawienia Historii Cen WS"

@@ -4,7 +4,7 @@
  * Plugin Name:       WS Price History
  * Text Domain:       ws-price-history
  * Description:       Price history for products.
- * Version:           1.0
+ * Version:           1.0.1
  * Requires at least: 6.0
  * Author:            Web Systems
  * Author URI:        https://www.k4.pl/

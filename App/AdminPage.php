@@ -39,12 +39,6 @@ class AdminPage
 			[$this, 'render_section'],
 			'ws-price-history-settings'
 		);
-		// add_settings_section(
-		// 	'ws-price-history-button-section',
-		// 	__('Button', 'ws-price-history-settings'),
-		// 	[$this, 'render_section'],
-		// 	'ws-price-history-settings'
-		// );
 		add_settings_section(
 			'ws-licence-section',
 			__('Pro Version', 'ws-price-history'),
@@ -270,7 +264,7 @@ class AdminPage
 	{
 		?>
 		<div class="<?php echo esc_attr($args['id']); ?>">
-			<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('', 'ws-price-history-settings'); ?></p>
+			<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('', 'ws-price-history'); ?></p>
 		</div>
 
 	<?php
@@ -284,7 +278,7 @@ class AdminPage
 			<li class="feature"><?php echo esc_html__("Automatic database table optimization", "ws-price-history"); ?></li>
 			<li class="feature"><?php echo esc_html__("Advanced support", "ws-price-history"); ?></li>
 		</ul>
-		<p class="premium-version"><?php echo esc_html__("To get premium version visit this link:", "ws-price-history") . " "; ?><a href="https://k4.pl/en/shop"><?php echo esc_html__("K4-shop", "ws-price-history-settings"); ?></a></p>
+		<p class="premium-version"><?php echo esc_html__("To get premium version visit this link:", "ws-price-history") . " "; ?><a href="https://k4.pl/en/shop"><?php echo esc_html__("K4-shop", "ws-price-history"); ?></a></p>
 <?php
 	}
 }
