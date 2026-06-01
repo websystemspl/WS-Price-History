@@ -7,9 +7,10 @@
  * Version:           1.0.1
  * Requires at least: 6.0
  * Author:            Web Systems
- * Author URI:        https://www.k4.pl/
+ * Author URI:        https://www.web-systems.pl/
  * License:           GPLv3
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
+ * Require License:   no
  * Tested up to:      6.0
  */
 

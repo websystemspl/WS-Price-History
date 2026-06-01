@@ -3,5 +3,9 @@
     "psr-4": {
       "WsPriceHistory\\App\\": "App/"
     }
+  },
+  "require": {
+      "websystems/wordpress-update-package": "^1.0",
+      "yahnis-elsts/plugin-update-checker": "^5.5"
   }
 }
