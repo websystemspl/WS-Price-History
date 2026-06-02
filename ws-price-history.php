@@ -20,6 +20,13 @@ if (!defined('WPINC')) {
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Anyape\UpdatePulse\Updater\v2_0\UpdatePulse_Updater;
+
+$ws_price_history_updater = new UpdatePulse_Updater(
+    wp_normalize_path(__FILE__),
+    wp_normalize_path(__DIR__)
+);
+
 class WsPriceHistory
 {
   public function __construct()
