@@ -130,8 +130,8 @@ class AdminPage
 						<p class="index-success"><?php echo esc_html__("Success", 'ws-price-history'); ?></p>
 					</div>
 					<div class="remove-all-old-prices">
-						<p><?php echo esc_html__("Press to remove prices older than 30 days: ", 'ws-price-history'); ?></p>
-						<a id="bulk-remove-all-old-prices" href="#" class="button-primary"><?php echo esc_html__("Remove prices older than 30 days", 'ws-price-history'); ?></a>
+						<p><?php echo esc_html__("Press to remove price history older than one year (the last known price of each product is kept): ", 'ws-price-history'); ?></p>
+						<a id="bulk-remove-all-old-prices" href="#" class="button-primary"><?php echo esc_html__("Remove old price history", 'ws-price-history'); ?></a>
 						<p class="remove-success"><?php echo esc_html__("Success", 'ws-price-history'); ?></p>
 					</div>
 					<?php do_settings_fields('ws-price-history-settings', 'ws-price-history-general-section'); ?>

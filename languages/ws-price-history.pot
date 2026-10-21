@@ -53,7 +53,7 @@ msgid "Press to index all prices: "
 msgstr ""
 
 #: App/AdminPage.php:133
-msgid "Press to remove prices older than 30 days: "
+msgid "Press to remove price history older than one year (the last known price of each product is kept): "
 msgstr ""
 
 #. Description of the plugin
@@ -70,7 +70,7 @@ msgid "Pro version features"
 msgstr ""
 
 #: App/AdminPage.php:134
-msgid "Remove prices older than 30 days"
+msgid "Remove old price history"
 msgstr ""
 
 #: App/AdminPage.php:91
@@ -81,8 +81,9 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
-#: App/Actions.php:25
-msgid "The lowest price from 30 days: "
+#: App/Actions.php
+#, php-format
+msgid "Lowest price in the 30 days before the reduction: %s"
 msgstr ""
 
 #: App/AdminPage.php:281
@@ -99,4 +100,17 @@ msgstr ""
 
 #: App/AdminPage.php:75
 msgid "WS Price History Settings"
+msgstr ""
+
+#: App/Actions.php
+#, php-format
+msgid "Price before the first reduction: %s"
+msgstr ""
+
+#: App/Actions.php
+msgid "Perishable goods"
+msgstr ""
+
+#: App/Actions.php
+msgid "Short shelf life: show the price from before the first reduction instead of the lowest price from 30 days."
 msgstr ""

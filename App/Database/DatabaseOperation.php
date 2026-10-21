@@ -2,108 +2,102 @@
 
 namespace WsPriceHistory\App\Database;
 
-use DateTime;
-use WsPriceHistory\App\Record;
-use WsPriceHistory\App\Database\DatabaseTable;
+use WsPriceHistory\App\LowestPriceCalculator;
 
 class DatabaseOperation
 {
-  public static function read(int $id): ?Record
+  private static function table()
   {
     global $wpdb;
-    $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
-    $query = $wpdb->prepare('SHOW TABLES LIKE %s', $tableNameWithPrefix);
+    return $wpdb->prefix . DatabaseTable::getTableName();
+  }
 
-    if ($wpdb->get_var($query) === $tableNameWithPrefix) {
-      $result = $wpdb->get_row(
-        "SELECT " .
-          DatabaseTable::getIdColumnName() . ", " .
-          DatabaseTable::getPostIdColumnName() . ", " .
-          DatabaseTable::getPriceColumnName() . ", " .
-          DatabaseTable::getDateColumnName() . ", " .
-          " FROM " . $tableNameWithPrefix . " WHERE " . DatabaseTable::getIdColumnName() . " = " . $id . ";",
-        "ARRAY_A",
+  /**
+   * Stores one price state of a product or a variation.
+   *
+   * @param int        $postId     product or variation ID
+   * @param float      $price      effective (charged) price
+   * @param float|null $regular    regular price
+   * @param string     $salePrice  sale price as set in WooCommerce ('' when none)
+   * @param bool       $onSale     effective price is a reduction
+   * @param int        $time       UTC timestamp from which the state applies
+   */
+  public static function insertSnapshot($postId, $price, $regular, $salePrice, $onSale, $time)
+  {
+    global $wpdb;
+    $wpdb->insert(
+      self::table(),
+      [
+        'post_id' => (int) $postId,
+        'price' => (string) (float) $price,
+        'date' => gmdate('Y-m-d', $time),
+        'regular_price' => $regular === null || $regular === '' ? null : (string) (float) $regular,
+        'sale_price' => $salePrice === null || $salePrice === '' ? null : (string) (float) $salePrice,
+        'on_sale' => $onSale ? 1 : 0,
+        'recorded_at' => gmdate('Y-m-d H:i:s', $time),
+      ],
+      ['%d', '%s', '%s', '%s', '%s', '%d', '%s']
+    );
+    return $wpdb->insert_id ? (int) $wpdb->insert_id : null;
+  }
+
+  /**
+   * History of one product/variation as LowestPriceCalculator rows, oldest first.
+   * Rows from 1.0.x have no recorded_at: their DATE is read as midnight UTC.
+   */
+  public static function getRows($postId, $limit = 1000)
+  {
+    global $wpdb;
+    $table = self::table();
+    $results = $wpdb->get_results(
+      $wpdb->prepare(
+        "SELECT * FROM (
+           SELECT id, price, regular_price, on_sale, COALESCE(recorded_at, CAST(date AS DATETIME)) AS t
+           FROM $table WHERE post_id = %d ORDER BY t DESC, id DESC LIMIT %d
+         ) x ORDER BY t ASC, id ASC",
+        (int) $postId,
+        (int) $limit
+      ),
+      ARRAY_A
+    );
+    $rows = [];
+    foreach ((array) $results as $r) {
+      $rows[] = LowestPriceCalculator::makeRow(
+        strtotime($r['t'] . ' UTC'),
+        $r['price'],
+        $r['regular_price'],
+        $r['on_sale'] === null ? null : (bool) (int) $r['on_sale']
       );
-      $id = $result[DatabaseTable::getIdColumnName()];
-      $postId = $result[DatabaseTable::getPostIdColumnName()];
-      $price = filter_var($result[DatabaseTable::getPriceColumnName()], FILTER_VALIDATE_BOOLEAN);
-      $date = DateTime::createFromFormat('Y-m-d H:i:s', $result[DatabaseTable::getDateColumnName()]);
     }
-    if ($result != null) {
-      $record = new Record($id, $postId, $price, $date);
-      return $record;
-    } else {
-      return null;
-    }
+    return $rows;
   }
 
-  public static function write(Record $record): ?int
+  public static function getLastRow($postId)
   {
-    global $wpdb;
-    $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
-    if ($record != null) {
-      $wpdb->insert($tableNameWithPrefix, array(
-        DatabaseTable::getPostIdColumnName() => $record->getPostId(),
-        DatabaseTable::getPriceColumnName() => floatval($record->getPrice()),
-        DatabaseTable::getDateColumnName() => $record->getDate()->format('Y-m-d'),
-      ));
-      $lastId = $wpdb->insert_id;
-      if ($lastId !== null) {
-        return $lastId;
-      }
-    } else {
-      return null;
-    }
+    $rows = self::getRows($postId, 1);
+    return empty($rows) ? null : $rows[0];
   }
 
-  public static function getPreviousPrice($postId)
+  /**
+   * Deletes history older than $days, but keeps for every product the newest row from before the
+   * cut-off, because that price still applied after the cut-off and is needed for the 30-day window.
+   */
+  public static function removeOldPrices($days = 365)
   {
     global $wpdb;
-    $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
-    $query = $wpdb->prepare("SELECT price as lowest_price FROM $tableNameWithPrefix WHERE post_id = %s ORDER BY date DESC LIMIT 1;", [$postId]);
-    $result = $wpdb->get_row($query);
-    if ($result->lowest_price != null) {
-      return $result->lowest_price;
-    } else {
-      return null;
-    }
-  }
-
-  public static function readOnePrice($postId)
-  {
-    global $wpdb;
-    $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
-    $query = $wpdb->prepare("SELECT MIN(price) AS lowest_price FROM $tableNameWithPrefix WHERE post_id = %s AND date >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$postId]);
-    $result = $wpdb->get_row($query);
-    if ($result->lowest_price != null) {
-      return $result->lowest_price;
-    } else {
-      return null;
-    }
-  }
-
-  public static function readAllPrices()
-  {
-    global $wpdb;
-    $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
-    $query = $wpdb->prepare("SELECT %s, MIN(price) AS lowest_price FROM $tableNameWithPrefix WHERE date >= DATE_SUB(NOW(), INTERVAL 30 DAY) GROUP BY post_id;", [DatabaseTable::getPostIdColumnName()]);
-    $result = $wpdb->get_results($query, 'ARRAY_N');
-    if ($result != null) {
-      return $result;
-    } else {
-      return null;
-    }
-  }
-  public static function removeOldPrices()
-  {
-    global $wpdb;
-    $tableNameWithPrefix = $wpdb->prefix . DatabaseTable::getTableName();
-    $query = $wpdb->prepare("DELETE FROM $tableNameWithPrefix WHERE date < DATE_SUB(NOW(), INTERVAL 30 DAY);");
-    $result = $wpdb->get_results($query, 'ARRAY_N');
-    if ($result != null) {
-      return $result;
-    } else {
-      return null;
-    }
+    $table = self::table();
+    $cutoff = gmdate('Y-m-d H:i:s', time() - (int) $days * 86400);
+    return $wpdb->query(
+      $wpdb->prepare(
+        "DELETE h FROM $table h
+         JOIN (
+           SELECT post_id, MAX(COALESCE(recorded_at, CAST(date AS DATETIME))) AS keep_t
+           FROM $table WHERE COALESCE(recorded_at, CAST(date AS DATETIME)) < %s
+           GROUP BY post_id
+         ) k ON k.post_id = h.post_id
+         WHERE COALESCE(h.recorded_at, CAST(h.date AS DATETIME)) < k.keep_t",
+        $cutoff
+      )
+    );
   }
 }
