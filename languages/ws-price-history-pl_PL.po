@@ -53,8 +53,8 @@ msgid "Press to index all prices: "
 msgstr "Naciśnij, aby zindeksować wszystkie ceny: "
 
 #: App/AdminPage.php:133
-msgid "Press to remove prices older than 30 days: "
-msgstr "Naciśnij, aby usunąć ceny starsze niż 30 dni: "
+msgid "Press to remove price history older than one year (the last known price of each product is kept): "
+msgstr "Naciśnij, aby usunąć historię cen starszą niż rok (ostatnia znana cena każdego produktu zostaje): "
 
 #. Description of the plugin
 #: App/AdminPage.php:110
@@ -71,8 +71,8 @@ msgid "Pro version features"
 msgstr "Funkcje wersji Pro"
 
 #: App/AdminPage.php:134
-msgid "Remove prices older than 30 days"
-msgstr "Usuń ceny starsze niż 30 dni"
+msgid "Remove old price history"
+msgstr "Usuń starą historię cen"
 
 #: App/AdminPage.php:91
 msgid "Settings Saved"
@@ -82,9 +82,10 @@ msgstr "Ustawienia zapisane"
 msgid "Success"
 msgstr "Sukces"
 
-#: App/Actions.php:25
-msgid "The lowest price from 30 days: "
-msgstr "Najniższa cena z ostatnich 30 dni: "
+#: App/Actions.php
+#, php-format
+msgid "Lowest price in the 30 days before the reduction: %s"
+msgstr "Najniższa cena z 30 dni przed obniżką: %s"
 
 #: App/AdminPage.php:281
 msgid "To get premium version visit this link:"
@@ -101,3 +102,16 @@ msgstr "Historia cen WS"
 #: App/AdminPage.php:75
 msgid "WS Price History Settings"
 msgstr "Ustawienia Historii Cen WS"
+
+#: App/Actions.php
+#, php-format
+msgid "Price before the first reduction: %s"
+msgstr "Cena sprzed pierwszej obniżki: %s"
+
+#: App/Actions.php
+msgid "Perishable goods"
+msgstr "Towar szybko psujący się"
+
+#: App/Actions.php
+msgid "Short shelf life: show the price from before the first reduction instead of the lowest price from 30 days."
+msgstr "Krótki termin przydatności: pokazuj cenę sprzed pierwszej obniżki zamiast najniższej ceny z 30 dni."

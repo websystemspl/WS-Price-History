@@ -4,7 +4,7 @@
  * Plugin Name:       WS Price History
  * Text Domain:       ws-price-history
  * Description:       Price history for products.
- * Version:           1.0.3
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Author:            Web Systems
  * Author URI:        https://www.web-systems.pl/
@@ -12,6 +12,8 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Require License:   no
  * Tested up to:      6.0
+ * Requires PHP:      7.1
+ * WC requires at least: 5.0
  */
 
 if (!defined('WPINC')) {
